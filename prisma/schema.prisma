@@ -1,0 +1,61 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum OfferStatus {
+  Pending
+  Declined
+  Accepted
+}
+
+model User {
+  id             Int      @id @default(autoincrement())
+  username       String   @unique
+  email          String   @unique
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  items          Item[]   @relation("UserItems")
+  offersMade     Offer[]  @relation("UserOffersMade")
+  offersReceived Offer[]  @relation("UserOffersReceived")
+}
+
+model Item {
+  id             Int      @id @default(autoincrement())
+  title          String
+  description    String
+  ownerId        Int
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  owner          User     @relation("UserItems", fields: [ownerId], references: [id])
+  offersMade     Offer[]  @relation("ItemOffered")
+  offersReceived Offer[]  @relation("ItemRequested")
+}
+
+model Offer {
+  id              Int      @id @default(autoincrement())
+  itemOfferedId   Int
+  itemRequestedId Int
+  offeredById     Int
+  requestedFromId Int
+  status          OfferStatus
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @default(now())
+
+  itemOffered     Item     @relation("ItemOffered", fields: [itemOfferedId], references: [id])
+  itemRequested   Item     @relation("ItemRequested", fields: [itemRequestedId], references: [id])
+  offeredBy       User     @relation("UserOffersMade", fields: [offeredById], references: [id])
+  requestedFrom   User     @relation("UserOffersReceived", fields: [requestedFromId], references: [id])
+}
