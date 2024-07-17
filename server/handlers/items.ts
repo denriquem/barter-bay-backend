@@ -29,12 +29,11 @@ export const getItem = async (req: Request, res: Response) => {
 
 export const createItem = async (req: Request, res: Response) => {
   try {
-    const item = await prisma.item.create({
+    await prisma.item.create({
       data: {
         title: req.body.title,
         description: req.body.description,
         ownerId: req.body.userId,
-
       }
     })
   } catch (error) {

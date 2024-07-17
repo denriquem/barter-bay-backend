@@ -16,7 +16,7 @@ dotenv.config();
 
 app.use(morgan('dev'))
 app.use(express.json());
-app.use("/api", router);
+app.use("/api", requiresAuth(), router);
 
 const config = {
   authRequired: false,
