@@ -2,10 +2,9 @@ import express from "express";
 import router from "./router";
 import { auth } from "express-openid-connect";
 import { PrismaClient } from "@prisma/client";
-import morgan from 'morgan'
+import morgan from "morgan";
 
-const { requiresAuth } = require('express-openid-connect');
-
+const { requiresAuth } = require("express-openid-connect");
 
 import dotenv from "dotenv";
 
@@ -14,7 +13,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 dotenv.config();
 
-app.use(morgan('dev'))
+app.use(morgan("dev"));
 app.use(express.json());
 app.use("/api", requiresAuth(), router);
 
@@ -24,16 +23,16 @@ const config = {
   secret: process.env.SESSION_SECRET,
   baseURL: process.env.BASE_URL,
   clientID: process.env.CLIENT_ID,
-  issuerBaseURL: process.env.IssuerBaseURL
-}
+  issuerBaseURL: process.env.IssuerBaseURL,
+};
 
 app.use(auth(config));
 
-app.get('/', (req, res) => {
-  res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
+app.get("/", (req, res) => {
+  res.send(req.oidc.isAuthenticated() ? "Logged in" : "Logged out");
 });
 
-app.get('/profile', requiresAuth(), (req, res) => {
+app.get("/profile", requiresAuth(), (req, res) => {
   res.send(JSON.stringify(req.oidc.user));
 });
 
