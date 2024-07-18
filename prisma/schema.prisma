@@ -21,26 +21,49 @@ enum OfferStatus {
 
 
 model Item {
-  id             Int      @id @default(autoincrement())
+  id             Int        @id @default(autoincrement())
   title          String
   description    String
   ownerId        String
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
-  offersMade     Offer[]  @relation("ItemOffered")
-  offersReceived Offer[]  @relation("ItemRequested")
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+  offersMade     Offer[]    @relation("ItemOffered")
+  offersReceived Offer[]    @relation("ItemRequested")
+  comments       Comment[]  
+  reactions      Reaction[]
 }
 
 model Offer {
-  id              Int      @id @default(autoincrement())
+  id              Int        @id @default(autoincrement())
   itemOfferedId   Int
   itemRequestedId Int
   offeredById     String
   requestedFromId String
   status          OfferStatus
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @default(now())
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+  itemOffered     Item       @relation("ItemOffered", fields: [itemOfferedId], references: [id])
+  itemRequested   Item       @relation("ItemRequested", fields: [itemRequestedId], references: [id])
+}
 
-  itemOffered     Item     @relation("ItemOffered", fields: [itemOfferedId], references: [id])
-  itemRequested   Item     @relation("ItemRequested", fields: [itemRequestedId], references: [id])
+model Comment {
+  id        Int        @id @default(autoincrement())
+  content   String
+  itemId    Int?
+  offerId   Int?
+  userId    String
+  createdAt DateTime   @default(now())
+  item      Item?      @relation(fields: [itemId], references: [id])
+  reactions Reaction[] 
+}
+
+model Reaction {
+  id        Int        @id @default(autoincrement())
+  emoji     String
+  itemId    Int?
+  commentId Int?
+  userId    String
+  createdAt DateTime   @default(now())
+  item      Item?      @relation(fields: [itemId], references: [id])
+  comment   Comment?   @relation(fields: [commentId], references: [id])
 }
