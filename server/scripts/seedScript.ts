@@ -1,27 +1,14 @@
 import prisma from "..";
 
 async function main() {
-  // Create users
-  const user1 = await prisma.user.create({
-    data: {
-      username: "user1",
-      email: "user1@example.com",
-    },
-  });
-
-  const user2 = await prisma.user.create({
-    data: {
-      username: "user2",
-      email: "user2@example.com",
-    },
-  });
-
+  const user1Id = "(google - oauth2) | 101185647605095174521";
+  const user2Id = "test";
   // Create items
   const item1 = await prisma.item.create({
     data: {
       title: "Item 1",
       description: "Description for item 1",
-      ownerId: user1.id,
+      ownerId: user1Id,
     },
   });
 
@@ -29,7 +16,7 @@ async function main() {
     data: {
       title: "Item 2",
       description: "Description for item 2",
-      ownerId: user2.id,
+      ownerId: user2Id,
     },
   });
 
@@ -38,8 +25,8 @@ async function main() {
     data: {
       itemOfferedId: item1.id,
       itemRequestedId: item2.id,
-      offeredById: user1.id,
-      requestedFromId: user2.id,
+      offeredById: user1Id,
+      requestedFromId: user2Id,
       status: "Pending",
     },
   });

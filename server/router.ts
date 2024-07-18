@@ -18,7 +18,7 @@ router.post("/item", createItem);
 
 // offers
 router.get("/offers", getAllOffers),
-  router.get("/offers-received:userId", getOffersReceived);
+router.get("/offers-received:userId", getOffersReceived);
 router.post("/offers", makeAnOffer);
 router.put("/accept-offer:id", acceptAnOffer);
 router.put("/decline-offer:id", declineAnOffer);

@@ -14,7 +14,7 @@ export const getAllOffers = async (req: Request, res: Response) => {
 
 export const getOffersReceived = async (req: Request, res: Response) => {
   try {
-    const userId = Number(req.params.userId);
+    const userId = req.params.userId;
     const items = await prisma.offer.findMany({
       where: { offeredById: userId },
     });
