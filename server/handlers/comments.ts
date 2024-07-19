@@ -1,8 +1,11 @@
 import { Request, Response } from "express";
 import prisma from "..";
+import { validateSchema } from "../validation/validationMiddleware";
+import { createCommentSchema } from "../validation/commentSchema";
 
 export const addComment = async (req: Request, res: Response) => {
     try {
+        validateSchema(createCommentSchema);
         await prisma.comment.create({
             data: {
                 content: req.body.content,
