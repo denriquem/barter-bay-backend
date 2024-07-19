@@ -50,7 +50,6 @@ model Comment {
   id        Int        @id @default(autoincrement())
   content   String
   itemId    Int?
-  offerId   Int?
   userId    String
   createdAt DateTime   @default(now())
   item      Item?      @relation(fields: [itemId], references: [id])
