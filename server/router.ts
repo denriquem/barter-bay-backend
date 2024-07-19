@@ -1,13 +1,15 @@
 import { Router } from "express";
 import { createItem, getAllItems, getItem } from "./handlers/items";
 import {
-  acceptAnOffer,
-  declineAnOffer,
-  getAllOffers,
-  getOffersReceived,
-  makeAnOffer,
-  retractAnOffer,
+    acceptAnOffer,
+    declineAnOffer,
+    getAllOffers,
+    getOffersReceived,
+    makeAnOffer,
+    retractAnOffer,
 } from "./handlers/offers";
+import { addComment, deleteComment } from "./handlers/comments";
+import { addReaction } from "./handlers/reactions";
 
 const router = Router();
 
@@ -18,10 +20,17 @@ router.post("/item", createItem);
 
 // offers
 router.get("/offers", getAllOffers),
-router.get("/offers-received:userId", getOffersReceived);
+    router.get("/offers-received:userId", getOffersReceived);
 router.post("/offers", makeAnOffer);
 router.put("/accept-offer:id", acceptAnOffer);
 router.put("/decline-offer:id", declineAnOffer);
 router.delete("/offer:id", retractAnOffer);
+
+// comments
+router.post("/comment", addComment);
+router.delete("/comment", deleteComment);
+
+//reactions
+router.post("/reactions", addReaction);
 
 export default router;
