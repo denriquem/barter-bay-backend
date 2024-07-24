@@ -22,6 +22,9 @@ export const getItem = async (req: Request, res: Response) => {
             where: {
                 id: id,
             },
+            include: {
+                comments: true,
+            },
         });
         res.json(item);
     } catch (error) {
