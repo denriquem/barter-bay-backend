@@ -26,7 +26,7 @@ export const getItem = async (req: Request, res: Response) => {
                 comments: true,
             },
         });
-        res.json(item);
+        res.status(200).json(item);
     } catch (error) {
         const errorMessage =
             error instanceof Error ? error.message : "Unknown error";
@@ -44,6 +44,7 @@ export const createItem = async (req: Request, res: Response) => {
                 ownerId: req.body.userId,
             },
         });
+        res.status(200).json({ messsage: "item succesfully created" });
     } catch (error) {
         const errorMessage =
             error instanceof Error ? error.message : "Unknown error";

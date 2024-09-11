@@ -13,6 +13,7 @@ export const addComment = async (req: Request, res: Response) => {
                 userId: req.body.userId,
             },
         });
+        res.status(200).json({ message: "succesfully added comment" });
     } catch (error) {
         const errorMessage =
             error instanceof Error ? error.message : "Unknown error";
@@ -28,6 +29,25 @@ export const deleteComment = async (req: Request, res: Response) => {
                 id: commentId,
             },
         });
+        res.status(200).json({
+            message: `Comment: ${commentId}, succesfully deleted`,
+        });
+    } catch (error) {
+        const errorMessage =
+            error instanceof Error ? error.message : "Unknown error";
+        res.status(500).json({ error: errorMessage });
+    }
+};
+
+export const getCommentsByItem = async (req: Request, res: Response) => {
+    const itemId = Number(req.params.itemId);
+    try {
+        const comments = await prisma.comment.findMany({
+            where: {
+                itemId,
+            },
+        });
+        res.status(200).json(comments);
     } catch (error) {
         const errorMessage =
             error instanceof Error ? error.message : "Unknown error";
