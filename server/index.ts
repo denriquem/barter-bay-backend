@@ -30,15 +30,16 @@ app.use(auth(config));
 app.get("/", (req, res) => {
     res.send(req.oidc.isAuthenticated() ? "Logged in" : "Logged out");
 });
-app.use("/api", requiresAuth(), router);
+// app.use("/api", requiresAuth(), router);
+app.use("/api", router);
 
 app.get("/profile", requiresAuth(), (req, res) => {
     res.send(JSON.stringify(req.oidc.user));
 });
 
-app.listen(port, () => {
+const server = app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
 });
 
-export { app };
+export { app, server };
 export default prisma;

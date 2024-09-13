@@ -37,14 +37,15 @@ export const getItem = async (req: Request, res: Response) => {
 export const createItem = async (req: Request, res: Response) => {
     try {
         validateSchema(createItemSchema);
-        await prisma.item.create({
+
+        const newItem = await prisma.item.create({
             data: {
                 title: req.body.title,
                 description: req.body.description,
                 ownerId: req.body.userId,
             },
         });
-        res.status(200).json({ messsage: "item succesfully created" });
+        res.status(200).json({ message: "item succesfully created", newItem });
     } catch (error) {
         const errorMessage =
             error instanceof Error ? error.message : "Unknown error";
