@@ -26,11 +26,11 @@ app.get("/authorized", function (req, res) {
     res.send("Secured Resource");
 });
 
-app.listen(port);
-
-console.log("Running on port ", port);
+const server = app.listen(port, () => {
+    console.log(`Server is running on http://localhost:${port}`);
+});
 
 // export default app;
 
-export { app };
+export { server, app };
 export default prisma;
