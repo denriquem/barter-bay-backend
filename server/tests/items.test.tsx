@@ -1,4 +1,4 @@
-import prisma, { app, server } from "../index";
+import prisma, { app, server } from "../futureFeIndex";
 import supertest from "supertest";
 import dotenv from "dotenv";
 

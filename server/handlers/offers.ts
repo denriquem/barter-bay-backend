@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import prisma from "..";
+import prisma from "../apiServer";
 
 export const getAllOffers = async (req: Request, res: Response) => {
     try {

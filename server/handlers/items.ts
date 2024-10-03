@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import prisma from "..";
+import prisma from "../apiServer";
 import { validateSchema } from "../validation/validationMiddleware";
 import { createItemSchema } from "../validation/itemSchema";
 
