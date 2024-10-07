@@ -22,7 +22,7 @@ A online community space for bartering and trading possessions with other users.
 
 - [NodeJs](https://nodejs.org/en)
 - [Express](https://expressjs.com/)
-- [PrismORM](https://www.prisma.io/orm)
+- [PrismaORM](https://www.prisma.io/orm)
 - [PostgreSQL](https://www.postgresql.org/)
 
 * Testing frameworks:
