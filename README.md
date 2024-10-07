@@ -12,11 +12,11 @@ A online community space for bartering and trading possessions with other users.
 
 ## How to run the app
 
-- once in the dmg folder, run `npm start`
+- once in the dmg folder, do `npm run start`
 
 ## How to run tests
 
-- once in the dmg folder, run `npm test`
+- once in the dmg folder, do `npm run test`
 
 ## Technologies Used
 
