@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
 import prisma from "../apiServer";
+import { validateSchema } from "../validation/validationMiddleware";
+import { createOfferSchema } from "../validation/offerSchema";
 
 export const getAllOffers = async (req: Request, res: Response) => {
     try {
@@ -16,8 +18,9 @@ export const getOffersReceived = async (req: Request, res: Response) => {
     try {
         const userId = req.params.userId;
         const items = await prisma.offer.findMany({
-            where: { offeredById: userId },
+            where: { requestedFromId: userId },
         });
+
         res.status(200).json(items);
     } catch (error) {
         const errorMessage =
@@ -28,17 +31,17 @@ export const getOffersReceived = async (req: Request, res: Response) => {
 
 export const makeAnOffer = async (req: Request, res: Response) => {
     try {
-        const formData = req.body.data;
-        await prisma.offer.create({
+        validateSchema(createOfferSchema);
+        const createdOffer = await prisma.offer.create({
             data: {
-                itemOfferedId: formData.id,
-                itemRequestedId: formData.itemRequestedIdid,
-                offeredById: formData.offeredById,
-                requestedFromId: formData.requestedFromId.id,
+                itemOfferedId: req.body.itemOfferedId,
+                itemRequestedId: req.body.itemRequestedId,
+                offeredById: req.body.offeredById,
+                requestedFromId: req.body.requestedFromId,
                 status: "Pending",
             },
         });
-        res.status(200).json({ message: "Offer created" });
+        res.status(200).json({ message: "Offer created", createdOffer });
     } catch (error) {
         const errorMessage =
             error instanceof Error ? error.message : "Unknown error";

@@ -17,8 +17,6 @@ afterAll(async () => {
 
 describe("Retreive items", () => {
     it("should get the available test items ", async () => {
-        console.log("THE THING", token);
-
         const response = await supertest(app)
             .get("/api/items")
             .set("Authorization", `Bearer ${token}`);
