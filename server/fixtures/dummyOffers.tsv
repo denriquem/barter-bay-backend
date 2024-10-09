@@ -1,0 +1,7 @@
+id	itemOfferedId	itemRequestedId	offeredById	requestedFromId	status	createdAt	updatedAt
+1	1	2	user_1	user_2	Pending	2024-10-01T12:00:00Z	2024-10-01T12:00:00Z
+2	3	1	user_3	user_1	Accepted	2024-10-01T12:01:00Z	2024-10-01T12:01:00Z
+3	4	5	user_4	user_5	Declined	2024-10-01T12:02:00Z	2024-10-01T12:02:00Z
+4	5	3	user_5	user_3	Pending	2024-10-01T12:03:00Z	2024-10-01T12:03:00Z
+5	2	6	user_2	user_6	Accepted	2024-10-01T12:04:00Z	2024-10-01T12:04:00Z
+6	6	4	user_6	user_4	Pending	2024-10-01T12:05:00Z	2024-10-01T12:05:00Z

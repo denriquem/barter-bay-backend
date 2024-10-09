@@ -17,7 +17,6 @@ const jwtCheck = auth({
     tokenSigningAlg: "RS256",
 });
 
-// enforce on all endpoints
 app.use(jwtCheck);
 
 app.use("/api", jwtCheck, router);
@@ -29,8 +28,6 @@ app.get("/authorized", function (req, res) {
 const server = app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
 });
-
-// export default app;
 
 export { server, app };
 export default prisma;
