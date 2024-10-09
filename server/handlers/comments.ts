@@ -2,12 +2,15 @@ import { Request, Response } from "express";
 import prisma from "../apiServer";
 import { validateSchema } from "../validation/validationMiddleware";
 import { createCommentSchema } from "../validation/commentSchema";
+import { generateId } from "../helpers/generateId";
 
 export const addComment = async (req: Request, res: Response) => {
     try {
         validateSchema(createCommentSchema);
+
         await prisma.comment.create({
             data: {
+                id: generateId(),
                 content: req.body.content,
                 itemId: req.body.itemId,
                 userId: req.body.userId,
@@ -22,7 +25,7 @@ export const addComment = async (req: Request, res: Response) => {
 };
 
 export const deleteComment = async (req: Request, res: Response) => {
-    const commentId = Number(req.params.id);
+    const commentId = req.params.id;
     try {
         await prisma.comment.delete({
             where: {
@@ -40,7 +43,7 @@ export const deleteComment = async (req: Request, res: Response) => {
 };
 
 export const getCommentsByItem = async (req: Request, res: Response) => {
-    const itemId = Number(req.params.itemId);
+    const itemId = req.params.itemId;
     try {
         const comments = await prisma.comment.findMany({
             where: {

@@ -2,12 +2,14 @@ import { Request, Response } from "express";
 import prisma from "../apiServer";
 import { validateSchema } from "../validation/validationMiddleware";
 import { createReactionSchema } from "../validation/reactionSchema";
+import { generateId } from "../helpers/generateId";
 
 export const addReaction = async (req: Request, res: Response) => {
     try {
         validateSchema(createReactionSchema);
         await prisma.reaction.create({
             data: {
+                id: generateId(),
                 userId: req.body.userId,
                 itemId: req.body.itemId,
                 emoji: req.body.emoji,
@@ -23,7 +25,7 @@ export const addReaction = async (req: Request, res: Response) => {
 };
 
 export const getReactionsByComment = async (req: Request, res: Response) => {
-    const commentId = Number(req.params.commentId);
+    const commentId = req.params.commentId;
     try {
         const reactions = await prisma.reaction.findMany({
             where: {

@@ -9,7 +9,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mongodb"
   url      = env("DATABASE_URL")
 }
 
@@ -21,7 +21,7 @@ enum OfferStatus {
 
 
 model Item {
-  id             Int        @id @default(autoincrement())
+  id             String     @id @map("_id")
   title          String
   description    String
   ownerId        String
@@ -34,9 +34,9 @@ model Item {
 }
 
 model Offer {
-  id              Int        @id @default(autoincrement())
-  itemOfferedId   Int
-  itemRequestedId Int
+  id              String     @id @map("_id")
+  itemOfferedId   String
+  itemRequestedId String
   offeredById     String
   requestedFromId String
   status          OfferStatus
@@ -47,9 +47,9 @@ model Offer {
 }
 
 model Comment {
-  id        Int        @id @default(autoincrement())
+  id        String     @id @map("_id")
   content   String
-  itemId    Int?
+  itemId    String?
   userId    String
   createdAt DateTime   @default(now())
   item      Item?      @relation(fields: [itemId], references: [id])
@@ -57,10 +57,10 @@ model Comment {
 }
 
 model Reaction {
-  id        Int        @id @default(autoincrement())
+  id        String      @id @map("_id")
   emoji     String
-  itemId    Int?
-  commentId Int?
+  itemId    String?
+  commentId String?
   userId    String
   createdAt DateTime   @default(now())
   item      Item?      @relation(fields: [itemId], references: [id])

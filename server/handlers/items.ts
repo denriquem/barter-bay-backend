@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import prisma from "../apiServer";
 import { validateSchema } from "../validation/validationMiddleware";
 import { createItemSchema } from "../validation/itemSchema";
+import { generateId } from "../helpers/generateId";
 
 export const getAllItems = async (req: Request, res: Response) => {
     try {
@@ -16,7 +17,7 @@ export const getAllItems = async (req: Request, res: Response) => {
 
 export const getItem = async (req: Request, res: Response) => {
     try {
-        const id = Number(req.params.id);
+        const id = req.params.id;
 
         const item = await prisma.item.findUnique({
             where: {
@@ -40,6 +41,7 @@ export const createItem = async (req: Request, res: Response) => {
 
         const newItem = await prisma.item.create({
             data: {
+                id: generateId(),
                 title: req.body.title,
                 description: req.body.description,
                 ownerId: req.body.userId,

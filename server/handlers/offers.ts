@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import prisma from "../apiServer";
 import { validateSchema } from "../validation/validationMiddleware";
 import { createOfferSchema } from "../validation/offerSchema";
+import { generateId } from "../helpers/generateId";
 
 export const getAllOffers = async (req: Request, res: Response) => {
     try {
@@ -32,8 +33,10 @@ export const getOffersReceived = async (req: Request, res: Response) => {
 export const makeAnOffer = async (req: Request, res: Response) => {
     try {
         validateSchema(createOfferSchema);
+
         const createdOffer = await prisma.offer.create({
             data: {
+                id: generateId(),
                 itemOfferedId: req.body.itemOfferedId,
                 itemRequestedId: req.body.itemRequestedId,
                 offeredById: req.body.offeredById,
@@ -50,7 +53,7 @@ export const makeAnOffer = async (req: Request, res: Response) => {
 };
 
 export const acceptAnOffer = async (req: Request, res: Response) => {
-    const offerId = Number(req.params.offerId);
+    const offerId = req.params.offerId;
     try {
         prisma.offer.update({
             where: {
@@ -71,7 +74,7 @@ export const acceptAnOffer = async (req: Request, res: Response) => {
 };
 
 export const declineAnOffer = async (req: Request, res: Response) => {
-    const offerId = Number(req.params.offerId);
+    const offerId = req.params.offerId;
     try {
         prisma.offer.update({
             where: {
@@ -92,7 +95,7 @@ export const declineAnOffer = async (req: Request, res: Response) => {
 };
 
 export const retractAnOffer = async (req: Request, res: Response) => {
-    const offerId = Number(req.params.offerId);
+    const offerId = req.params.offerId;
     try {
         prisma.offer.delete({
             where: {
