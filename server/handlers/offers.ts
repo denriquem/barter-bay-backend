@@ -78,7 +78,7 @@ export const acceptAnOffer = async (req: Request, res: Response) => {
 export const declineAnOffer = async (req: Request, res: Response) => {
     const offerId = req.params.offerId;
     try {
-        prisma.offer.update({
+        const updatedOffer = await prisma.offer.update({
             where: {
                 id: offerId,
             },
@@ -88,6 +88,7 @@ export const declineAnOffer = async (req: Request, res: Response) => {
         });
         res.status(200).json({
             message: `Offer: ${offerId}, has been declined`,
+            updatedOffer,
         });
     } catch (error) {
         const errorMessage =

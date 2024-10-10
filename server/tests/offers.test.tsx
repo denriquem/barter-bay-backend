@@ -73,4 +73,21 @@ describe("Offer actions", () => {
             },
         });
     });
+
+    it("Should be able to decline an offer", async () => {
+        const response = await supertest(app)
+            .put("/api/decline-offer/1")
+            .set("Authorization", `Bearer ${token}`);
+
+        expect(response.status).toBe(200);
+        expect(response.body.message).toEqual("Offer: 1, has been declined");
+        expect(response.body.updatedOffer.status).toEqual("Declined");
+
+        await prisma.offer.update({
+            where: { id: "1" },
+            data: {
+                status: "Pending",
+            },
+        });
+    });
 });
