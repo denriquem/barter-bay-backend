@@ -56,4 +56,21 @@ describe("Offer actions", () => {
         const createdOffer = response.body.createdOffer.id;
         await prisma.offer.delete({ where: { id: createdOffer } });
     });
+
+    it("Should be able to accept an offer", async () => {
+        const response = await supertest(app)
+            .put("/api/accept-offer/1")
+            .set("Authorization", `Bearer ${token}`);
+
+        expect(response.status).toBe(200);
+        expect(response.body.message).toEqual("Offer: 1 has been accepted");
+        expect(response.body.updatedOffer.status).toEqual("Accepted");
+
+        await prisma.offer.update({
+            where: { id: "1" },
+            data: {
+                status: "Pending",
+            },
+        });
+    });
 });
