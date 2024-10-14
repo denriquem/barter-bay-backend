@@ -8,7 +8,7 @@ export const addComment = async (req: Request, res: Response) => {
     try {
         validateSchema(createCommentSchema);
 
-        await prisma.comment.create({
+        const newComment = await prisma.comment.create({
             data: {
                 id: generateId(),
                 content: req.body.content,
@@ -16,7 +16,10 @@ export const addComment = async (req: Request, res: Response) => {
                 userId: req.body.userId,
             },
         });
-        res.status(200).json({ message: "succesfully added comment" });
+        res.status(200).json({
+            message: "succesfully added comment",
+            newComment,
+        });
     } catch (error) {
         const errorMessage =
             error instanceof Error ? error.message : "Unknown error";
