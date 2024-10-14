@@ -90,4 +90,24 @@ describe("Offer actions", () => {
             },
         });
     });
+
+    it("Should be able to delete an offer", async () => {
+        const newOffer = {
+            itemOfferedId: "26",
+            itemRequestedId: "2",
+            offeredById: "2",
+            requestedFromId: "1",
+        };
+
+        await prisma.offer.create({
+            data: { id: "999900999", status: "Pending", ...newOffer },
+        });
+
+        const response = await supertest(app)
+            .delete("/api/offers/999900999")
+            .set("Authorization", `Bearer ${token}`);
+
+        expect(response.status).toBe(200);
+        expect(response.body.deletedOffer.id).toEqual("999900999");
+    });
 });

@@ -99,14 +99,18 @@ export const declineAnOffer = async (req: Request, res: Response) => {
 
 export const retractAnOffer = async (req: Request, res: Response) => {
     const offerId = req.params.offerId;
+
     try {
-        prisma.offer.delete({
+        const deletedOffer = await prisma.offer.delete({
             where: {
                 id: offerId,
             },
         });
 
-        res.status(200).json({ message: "offer has been retracted" });
+        res.status(200).json({
+            message: "offer has been retracted",
+            deletedOffer,
+        });
     } catch (error) {
         const errorMessage =
             error instanceof Error ? error.message : "Unknown error";

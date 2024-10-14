@@ -28,7 +28,7 @@ router.get("/offers-received/:userId", getOffersReceived);
 router.post("/offers", makeAnOffer);
 router.put("/accept-offer/:offerId", acceptAnOffer);
 router.put("/decline-offer/:offerId", declineAnOffer);
-router.delete("/offer/:id", retractAnOffer);
+router.delete("/offers/:offerId", retractAnOffer);
 
 // comments
 router.post("/comment", addComment);
