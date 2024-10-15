@@ -32,7 +32,7 @@ router.delete("/offers/:offerId", retractAnOffer);
 
 // comments
 router.post("/comment", addComment);
-router.delete("/comment", deleteComment);
+router.delete("/comment/:commentId", deleteComment);
 router.get("/comments/:itemId", getCommentsByItem);
 
 //reactions

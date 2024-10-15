@@ -28,7 +28,8 @@ export const addComment = async (req: Request, res: Response) => {
 };
 
 export const deleteComment = async (req: Request, res: Response) => {
-    const commentId = req.params.id;
+    const commentId = req.params.commentId;
+
     try {
         await prisma.comment.delete({
             where: {
