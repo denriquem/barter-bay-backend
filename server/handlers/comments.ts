@@ -1,13 +1,9 @@
 import { Request, Response } from "express";
 import prisma from "../apiServer";
-import { validateSchema } from "../validation/validationMiddleware";
-import { createCommentSchema } from "../validation/commentSchema";
 import { generateId } from "../helpers/generateId";
 
 export const addComment = async (req: Request, res: Response) => {
     try {
-        validateSchema(createCommentSchema);
-
         const newComment = await prisma.comment.create({
             data: {
                 id: generateId(),

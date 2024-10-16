@@ -16,13 +16,16 @@ import {
 import { addReaction } from "./handlers/reactions";
 import { validateSchema } from "./validation/validationMiddleware";
 import { createOfferSchema } from "./validation/offerSchema";
+import { createItemSchema } from "./validation/itemSchema";
+import { createCommentSchema } from "./validation/commentSchema";
+import { createReactionSchema } from "./validation/reactionSchema";
 
 const router = Router();
 
 // items
 router.get("/items", getAllItems);
 router.get("/item/:id", getItem);
-router.post("/item", createItem);
+router.post("/item", validateSchema(createItemSchema), createItem);
 
 // offers
 router.get("/offers", getAllOffers);
@@ -33,11 +36,11 @@ router.put("/decline-offer/:offerId", declineAnOffer);
 router.delete("/offers/:offerId", retractAnOffer);
 
 // comments
-router.post("/comment", addComment);
+router.post("/comment", validateSchema(createCommentSchema), addComment);
 router.delete("/comment/:commentId", deleteComment);
 router.get("/comments/:itemId", getCommentsByItem);
 
 //reactions
-router.post("/reactions", addReaction);
+router.post("/reactions", validateSchema(createReactionSchema), addReaction);
 
 export default router;

@@ -46,6 +46,19 @@ describe("Comment actions", () => {
         await prisma.comment.delete({ where: { id: newCommentId } });
     });
 
+    it("should return an error if the new comment is incomplete", async () => {
+        const newComment = {
+            itemId: "1",
+            userId: "user_1",
+        };
+        const response = await supertest(app)
+            .post("/api/comment")
+            .set("Authorization", `Bearer ${token}`)
+            .send(newComment);
+
+        expect(response.status).toBe(400);
+    });
+
     it("should delete a comment", async () => {
         const newComment = {
             id: "999900999",

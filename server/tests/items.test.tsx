@@ -52,4 +52,18 @@ describe("Create item", () => {
         const newItemId = response.body.newItem.id;
         await prisma.item.delete({ where: { id: newItemId } });
     });
+
+    it("should return an error if the new item is incomplete", async () => {
+        const newItem = {
+            description: "a brand new test item",
+            userId: "1",
+        };
+
+        const response = await supertest(app)
+            .post("/api/item")
+            .set("Authorization", `Bearer ${token}`)
+            .send(newItem);
+
+        expect(response.status).toBe(400);
+    });
 });

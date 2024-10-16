@@ -1,7 +1,5 @@
 import { NextFunction, Request, Response } from "express";
 import prisma from "../apiServer";
-import { validateSchema } from "../validation/validationMiddleware";
-import { createOfferSchema } from "../validation/offerSchema";
 import { generateId } from "../helpers/generateId";
 
 export const getAllOffers = async (req: Request, res: Response) => {

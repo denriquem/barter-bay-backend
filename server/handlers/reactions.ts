@@ -1,12 +1,9 @@
 import { Request, Response } from "express";
 import prisma from "../apiServer";
-import { validateSchema } from "../validation/validationMiddleware";
-import { createReactionSchema } from "../validation/reactionSchema";
 import { generateId } from "../helpers/generateId";
 
 export const addReaction = async (req: Request, res: Response) => {
     try {
-        validateSchema(createReactionSchema);
         await prisma.reaction.create({
             data: {
                 id: generateId(),
