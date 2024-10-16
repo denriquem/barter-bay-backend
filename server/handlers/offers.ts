@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import prisma from "../apiServer";
 import { validateSchema } from "../validation/validationMiddleware";
 import { createOfferSchema } from "../validation/offerSchema";
@@ -32,8 +32,6 @@ export const getOffersReceived = async (req: Request, res: Response) => {
 
 export const makeAnOffer = async (req: Request, res: Response) => {
     try {
-        validateSchema(createOfferSchema);
-
         const createdOffer = await prisma.offer.create({
             data: {
                 id: generateId(),

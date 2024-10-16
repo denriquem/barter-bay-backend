@@ -14,6 +14,8 @@ import {
     getCommentsByItem,
 } from "./handlers/comments";
 import { addReaction } from "./handlers/reactions";
+import { validateSchema } from "./validation/validationMiddleware";
+import { createOfferSchema } from "./validation/offerSchema";
 
 const router = Router();
 
@@ -25,7 +27,7 @@ router.post("/item", createItem);
 // offers
 router.get("/offers", getAllOffers);
 router.get("/offers-received/:userId", getOffersReceived);
-router.post("/offers", makeAnOffer);
+router.post("/offers", validateSchema(createOfferSchema), makeAnOffer);
 router.put("/accept-offer/:offerId", acceptAnOffer);
 router.put("/decline-offer/:offerId", declineAnOffer);
 router.delete("/offers/:offerId", retractAnOffer);

@@ -57,6 +57,20 @@ describe("Offer actions", () => {
         await prisma.offer.delete({ where: { id: createdOffer } });
     });
 
+    it("should return an error if the new offer is incomplete", async () => {
+        const newOffer = {
+            itemOfferedId: "26",
+            requestedFromId: "1",
+        };
+
+        const response = await supertest(app)
+            .post("/api/offers")
+            .set("Authorization", `Bearer ${token}`)
+            .send(newOffer);
+
+        expect(response.status).toBe(400);
+    });
+
     it("Should be able to accept an offer", async () => {
         const response = await supertest(app)
             .put("/api/accept-offer/1")
