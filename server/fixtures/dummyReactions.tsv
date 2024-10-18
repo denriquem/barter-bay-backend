@@ -1,0 +1,7 @@
+id	emoji	itemId	commentId	userId	createdAt
+1	grinning_face	1	c1	user_1	2024-10-01T12:00:00Z
+2	thumbs_up	NULL	c1	user_2	2024-10-01T12:01:00Z
+3	red_heart	NULL	c3	user_3	2024-10-01T12:02:00Z
+4	eyes	NULL	c4	user_4	2024-10-01T12:03:00Z
+5	fire	NULL	c5	user_5	2024-10-01T12:04:00Z
+6	face_with_tears_of_joy	NULL	c6	user_6	2024-10-01T12:05:00Z
