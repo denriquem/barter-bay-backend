@@ -4,7 +4,7 @@ import { generateId } from "../helpers/generateId";
 
 export const addReaction = async (req: Request, res: Response) => {
     try {
-        await prisma.reaction.create({
+        const newReaction = await prisma.reaction.create({
             data: {
                 id: generateId(),
                 userId: req.body.userId,
@@ -13,7 +13,10 @@ export const addReaction = async (req: Request, res: Response) => {
                 commentId: req.body.commentId,
             },
         });
-        res.status(200).json({ message: "succesfully created reaction" });
+        res.status(200).json({
+            message: "succesfully created reaction",
+            newReaction,
+        });
     } catch (error) {
         const errorMessage =
             error instanceof Error ? error.message : "Unknown error";

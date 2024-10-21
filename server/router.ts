@@ -13,7 +13,11 @@ import {
     deleteComment,
     getCommentsByItem,
 } from "./handlers/comments";
-import { addReaction } from "./handlers/reactions";
+import {
+    addReaction,
+    getReactionsByComment,
+    removeReaction,
+} from "./handlers/reactions";
 import { validateSchema } from "./validation/validationMiddleware";
 import { createOfferSchema } from "./validation/offerSchema";
 import { createItemSchema } from "./validation/itemSchema";
@@ -42,5 +46,7 @@ router.get("/comments/:itemId", getCommentsByItem);
 
 //reactions
 router.post("/reactions", validateSchema(createReactionSchema), addReaction);
+router.get("/reactions/:commentId", getReactionsByComment);
+router.delete("/reactions/:reactionId", removeReaction);
 
 export default router;
