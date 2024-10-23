@@ -4,6 +4,7 @@ import { auth as jwtAuth } from "express-oauth2-jwt-bearer";
 import { auth, requiresAuth } from "express-openid-connect";
 import { PrismaClient } from "@prisma/client";
 import router from "./router";
+import cors from "cors";
 
 const port = 8080;
 
@@ -11,6 +12,14 @@ const prisma = new PrismaClient();
 const app = express();
 app.use(morgan("dev"));
 app.use(express.json());
+
+app.use(
+    cors({
+        origin: "http://localhost:3000",
+        methods: ["GET", "POST", "PUT", "DELETE"],
+        credentials: true,
+    })
+);
 
 const config = {
     authRequired: false,
